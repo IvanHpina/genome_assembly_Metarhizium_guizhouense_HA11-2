@@ -1,0 +1,9 @@
+# **Pipeline Assembly and annotation of the _Metarhizium guizhouense_ HA11-2 fungus**
+
+## Introduction
+
+This pipeline describes the programs, steps, results, and considerations that will be
+used during _de Novo_ assembly and annotation of the fungal genome
+_Metarhizium guizhouense_ HA11-2.
+The pipeline is divided into several sections, taking into account the main
+processes that are carried out
