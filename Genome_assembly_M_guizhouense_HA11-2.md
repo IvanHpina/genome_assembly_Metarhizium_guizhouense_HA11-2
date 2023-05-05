@@ -61,3 +61,43 @@ SLIDING WINDOW:4:25 MINLEN:40
 4 files will be obtained, the paired ones and the non-paired ones, the ones that interest us will be
 those paired, these files underwent a quality analysis with `fasqc`.
 Quality charts are compared.
+
+## 2. _de Novo_ assembly of the genome with the reads already filtered and filtering of the
+contigs
+### 2.1 _de Novo_ assembly of the genome
+
+With the paired readings (filtered by quality or not filtered) we proceed to carry out
+the _de Novo_ assembly, for this the **SPAdes** program will be used. This program what it does
+is to use a certain length of the read, this is K-mer or k-mer, this is designated at the time of running
+the program, you can put several k-mer, in this case three were used: 21, 33, 55.
+
+On the command line, type the following:
+```bash
+spades.py -1 02_trimming/HAII_2_DNA_Sec_R1_PE.trimming.fastq.gz -2 02_trimming/HAII_2_DNA_Sec_R2_PE.trimming.fastq.gz -k 21,25,33,47,55,67,71,83,99,111 --careful -o 03_assembly_ allkmer_filter -t 6
+```
+This process requires a lot of computational capacity, so it is recommended not to
+run other processes concurrent to this one.
+
+Finishing the process several files are generated, of which the most important are
+the contigs.fasta and the scaffolds.fasta. which can be analyzed to determine
+the number of contigs `grep ">" contigs.fasta or scafolds.fasta | wc -l`
+later a graph of the contigs or scaffolds vs their coverage will be made to remove
+all those polluting contigs.
+
+## 2.2 Filtering contaminants and low coverage contigs
+
+The problem with massive sequencing is the number of samples that are run, this can
+cause cross contamination, in addition, from the beginning it can carry genetic material of bacteria
+or viruses and the algorithms of the **SPAdes** program generate small contigs with coverage
+less than the smallest k-mer used, in this case 21.
+
+Therefore, those contigs with low coverage and size less than 500 bp will be removed,
+First, a graph of contigs vs. coverage must be made, which can be done in
+excel, in this [link][de5b4ec4] come the instructions to make the graph
+from the .fasta files.
+
+   [de5b4ec4]: https://tinyurl.com/CVLexcel "CVL plot"
+
+The filtering of the contigs must be done manually, those contigs that do not
+they comply with the aforementioned characteristics and later a new graph is made.
+They are compared with each other and differences are observed.
